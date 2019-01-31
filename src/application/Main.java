@@ -38,6 +38,8 @@ public class Main extends Application {
 	//Class variables
 	static Text txt;
 	static TextField txtField;
+	static String imgSrc = "file:cat.jpg";
+	static ImageView img;
 	
 	//In this method you define how your window is going to look
 	@Override
@@ -47,7 +49,7 @@ public class Main extends Application {
 			BorderPane rootPane = new BorderPane();
 			Scene scene = new Scene(rootPane, 400, 400);
 			stage.setTitle("Window example");
-			stage.setMaximized(true);
+			//stage.setMaximized(true);
 			stage.setScene(scene);
 			
 			//Setting up the main panes of the window
@@ -59,6 +61,11 @@ public class Main extends Application {
 			FlowPane bottomPane = new FlowPane();
 			bottomPane.setAlignment(Pos.CENTER);
 			rootPane.setBottom(bottomPane);
+			
+			FlowPane rightPane = new FlowPane();
+			rightPane.setAlignment(Pos.CENTER);
+			rightPane.setOrientation(Orientation.VERTICAL);
+			rootPane.setRight(rightPane);
 			
 			//Setting up class variable components
 			Menu.setState(Menu.MAIN);
@@ -81,9 +88,12 @@ public class Main extends Application {
 			bottomPane.getChildren().add(btn2);
 			FlowPane.setMargin(btn2, defMargins);
 			
-			Image sideImg = new Image("file:cat.jpg");
-			ImageView img = new ImageView(sideImg);
-			rootPane.setRight(img);
+			img = new ImageView(new Image("file:cat.jpg"));
+			img.setFitWidth(200);
+			img.setPreserveRatio(true);
+			rightPane.getChildren().add(img);
+			FlowPane.setMargin(img, defMargins);
+			
 			
 			stage.show();
 		}
@@ -97,18 +107,30 @@ public class Main extends Application {
 class Btn1Action implements EventHandler<ActionEvent> {
 	@Override
 	public void handle(ActionEvent e) {
-		switch(Menu.getState()) {
-		case MAIN:
-			Menu.setState(Menu.FIRST);
-			break;
-		case FIRST:
-			Main.txtField.setText("FIZZ");
-			break;
-		case SECOND:
-			Main.txtField.setText("BUZZ");
-			break;
+		if(Main.txtField.getText().equals("SWITCH")) {
+			if(Main.imgSrc.equals("file:cat.jpg")) {
+				Main.imgSrc = "file:hamster.jpg";
+				Main.img.setImage(new Image(Main.imgSrc));
+			}
+			else if(Main.imgSrc.equals("file:hamster.jpg")) {
+				Main.imgSrc = "file:cat.jpg";
+				Main.img.setImage(new Image(Main.imgSrc));
+			}
 		}
-		Main.txt.setText(Menu.getMenuText());
+		else {
+			switch(Menu.getState()) {
+			case MAIN:
+				Menu.setState(Menu.FIRST);
+				break;
+			case FIRST:
+				Main.txtField.setText("FIZZ");
+				break;
+			case SECOND:
+				Main.txtField.setText("BUZZ");
+				break;
+			}
+			Main.txt.setText(Menu.getMenuText());
+		}
 	}
 }
 
