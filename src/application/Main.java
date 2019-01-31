@@ -108,14 +108,11 @@ class Btn1Action implements EventHandler<ActionEvent> {
 	@Override
 	public void handle(ActionEvent e) {
 		if(Main.txtField.getText().equals("SWITCH")) {
-			if(Main.imgSrc.equals("file:cat.jpg")) {
+			if(Main.imgSrc.equals("file:cat.jpg"))
 				Main.imgSrc = "file:hamster.jpg";
-				Main.img.setImage(new Image(Main.imgSrc));
-			}
-			else if(Main.imgSrc.equals("file:hamster.jpg")) {
+			else if(Main.imgSrc.equals("file:hamster.jpg"))
 				Main.imgSrc = "file:cat.jpg";
-				Main.img.setImage(new Image(Main.imgSrc));
-			}
+			Main.img.setImage(new Image(Main.imgSrc));
 		}
 		else {
 			switch(Menu.getState()) {
